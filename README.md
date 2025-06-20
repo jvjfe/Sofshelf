@@ -106,4 +106,4 @@ JWT_SECRET="sua-chave-secreta"
 ## 👥 Desenvolvido por
 
 - [João Vítor Justino Ferri](https://github.com/jvjfe)
-- [João David Petrovich](https://github.com/JoaoPetrovich)
+- [João David Petrovich](https://github.com/JDPetrovich)
