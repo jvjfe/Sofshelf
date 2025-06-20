@@ -7,7 +7,6 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "git": "git add . && git commit -m \"update\" && git push"
   },
   "dependencies": {
     "@expo/config-plugins": "~10.0.0",
