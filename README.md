@@ -43,13 +43,13 @@ Certifique-se de ter os seguintes itens instalados na sua máquina:
 1. Clone o repositório:
 
     ```bash
-    git clone https://github.com/usuario/nome-do-repositorio.git
+   git clone https://github.com/jvjfe/Sofshelf
     ```
 
 2. Navegue até a pasta do projeto:
 
     ```bash
-    cd nome-do-repositorio
+    cd Sofshelf
     ```
 
 3. Instale as dependências:
