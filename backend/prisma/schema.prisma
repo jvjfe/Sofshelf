@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String  @unique
+  password  String
+  role      String  @default("employee")
+  companyId String? @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company      Company?       @relation("UserCompany", fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ownerCompany Company?       @relation("CompanyOwner")
+  invites      Invite[]       @relation("UserInvites")
+  history      History[]
+  product      Product[]
+  rack         Rack[]
+  shelf        Shelf[]
+  brand        Brand[]
+  color        Color[]
+  embalagem    Embalagem[]
+  ProductPrice ProductPrice[]
+  Movement     Movement[]
+  QtEmbalagem  QtEmbalagem[]
+}
+
+model Invite {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userEmail String
+  status    String
+  companyId String @db.ObjectId
+  userId    String @db.ObjectId
+
+  createdAt  DateTime  @default(now())
+  acceptedAt DateTime?
+
+  user    User    @relation("UserInvites", fields: [userId], references: [id])
+  company Company @relation(fields: [companyId], references: [id])
+}
+
+model Company {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  ownerId      String @unique @db.ObjectId
+  companyEmail String @default("default@email.com")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner     User        @relation("CompanyOwner", fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  employees User[]      @relation("UserCompany")
+  racks     Rack[]
+  brands    Brand[]
+  colors    Color[]
+  embalagem Embalagem[]
+  products  Product[]
+  invites   Invite[]
+  history   History[]
+  shelf     Shelf[]
+
+  ProductPrice ProductPrice[]
+  Movement     Movement[]
+  QtEmbalagem  QtEmbalagem[]
+}
+
+model Rack {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  location    String?
+  description String?
+  companyId   String  @db.ObjectId
+  userId      String  @db.ObjectId
+  status      Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  shelves Shelf[]
+}
+
+model Shelf {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  product   Product[]
+  rackId    String    @db.ObjectId
+  userId    String    @db.ObjectId
+  companyId String    @db.ObjectId
+  status    Boolean   @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rack    Rack    @relation(fields: [rackId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  company Company @relation(fields: [companyId], references: [id])
+}
+
+model Product {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  description    String?
+  embalagemSigla String
+  qtEmbalagemId  String  @db.ObjectId
+  shelfId        String  @db.ObjectId
+  userId         String  @db.ObjectId
+  companyId      String  @db.ObjectId
+  status         Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  embalagem    Embalagem      @relation(fields: [embalagemSigla], references: [sigla])
+  qtEmbalagem  QtEmbalagem    @relation(fields: [qtEmbalagemId], references: [id])
+  shelf        Shelf          @relation(fields: [shelfId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
+  company      Company        @relation(fields: [companyId], references: [id])
+  ProductPrice ProductPrice[]
+  Movement     Movement[]
+}
+
+model Brand {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  companyId String  @db.ObjectId
+  userId    String  @db.ObjectId
+  status    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company      Company        @relation(fields: [companyId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
+  ProductPrice ProductPrice[]
+}
+
+model Color {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  hexCode   String?
+  companyId String  @db.ObjectId
+  userId    String  @db.ObjectId
+  status    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company      Company        @relation(fields: [companyId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
+  ProductPrice ProductPrice[]
+}
+
+model Embalagem {
+  sigla     String  @id @map("_id")
+  name      String
+  companyId String  @db.ObjectId
+  userId    String  @db.ObjectId
+  status    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company  Company   @relation(fields: [companyId], references: [id])
+  user     User      @relation(fields: [userId], references: [id])
+  products Product[]
+}
+
+model QtEmbalagem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  quantity  Int
+  companyId String  @db.ObjectId
+  userId    String  @db.ObjectId
+  status    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company  Company   @relation(fields: [companyId], references: [id])
+  user     User      @relation(fields: [userId], references: [id])
+  products Product[]
+
+  @@unique([quantity, companyId])
+}
+
+model ProductPrice {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId String  @db.ObjectId
+  brandId   String  @db.ObjectId
+  colorId   String? @db.ObjectId
+  price     Float
+  companyId String  @db.ObjectId
+  userId    String  @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product  Product    @relation(fields: [productId], references: [id])
+  brand    Brand      @relation(fields: [brandId], references: [id])
+  color    Color?     @relation(fields: [colorId], references: [id])
+  company  Company    @relation(fields: [companyId], references: [id])
+  user     User       @relation(fields: [userId], references: [id])
+  Movement Movement[]
+}
+
+model Movement {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId    String  @db.ObjectId
+  productPrice String?  @db.ObjectId
+  quantity     Int
+  action       String
+  isEmbalagem  Boolean
+  companyId    String  @db.ObjectId
+  userId       String  @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product Product      @relation(fields: [productId], references: [id])
+  price   ProductPrice? @relation(fields: [productPrice], references: [id])
+  company Company      @relation(fields: [companyId], references: [id])
+  user    User         @relation(fields: [userId], references: [id])
+}
+
+model History {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  action    String
+  table     String
+  companyId String?  @db.ObjectId
+  userId    String?  @db.ObjectId
+  itemId    String   @db.ObjectId
+  company   Company? @relation(fields: [companyId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
