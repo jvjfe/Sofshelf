@@ -21,7 +21,7 @@ Sistema de gestão de estoque com controle de movimentações, desenvolvido com 
 - [Yarn](https://yarnpkg.com/)
 - [Express.js](https://expressjs.com/)
 - [dotenv](https://www.npmjs.com/package/dotenv)
-- [MongoDB ou PostgreSQL](https://www.mongodb.com/ ou https://www.postgresql.org/)
+- [MongoDB](https://www.mongodb.com/)
 
 ---
 
