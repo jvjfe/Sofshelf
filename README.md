@@ -1,31 +1,49 @@
-﻿# SOFSHELF
+# SOFSHELF
 
+Sistema de gestão de estoque com controle de movimentações, desenvolvido com Node.js, Prisma e Yarn.
+
+---
 
 ## Funcionalidades
 
+- Cadastro de produtos
+- Controle de entrada e saída de estoque
+- Visualização de movimentações
+- Integração com banco de dados relacional
+- API RESTful para consumo via frontend ou outros serviços
 
+---
 
 ## Tecnologias Usadas
 
-- Node.js
-- Prisma
-- Yarn
-- Outras tecnologias
+- [Node.js](https://nodejs.org/)
+- [Prisma ORM](https://www.prisma.io/)
+- [Yarn](https://yarnpkg.com/)
+- [Express.js](https://expressjs.com/)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [MongoDB ou PostgreSQL](https://www.mongodb.com/ ou https://www.postgresql.org/)
 
-## Como Rodar o Projeto
+---
+
+##  Como Rodar o Projeto
 
 ### Pré-requisitos
 
-- Node.js instalado
-- Yarn instalado
-- Banco de dados configurado
+Certifique-se de ter os seguintes itens instalados na sua máquina:
+
+- Node.js
+- Yarn
+- Banco de dados (MongoDB ou PostgreSQL)
+- `.env` configurado corretamente
+
+---
 
 ### Instalação
 
 1. Clone o repositório:
 
     ```bash
-    git clone https://github.com/
+    git clone https://github.com/usuario/nome-do-repositorio.git
     ```
 
 2. Navegue até a pasta do projeto:
@@ -40,26 +58,52 @@
     yarn install
     ```
 
-### Rodando o servidor
+---
 
-1. Para rodar o servidor localmente, use o seguinte comando:
+###  Rodando o Servidor
 
-    ```bash
-    yarn dev
-    ```
+Para iniciar o servidor localmente:
 
-    Isso irá iniciar o servidor e você poderá acessar a aplicação localmente.
+```bash
+yarn dev
+````
 
-### Prisma Studio
+> Isso iniciará o servidor em modo de desenvolvimento. A aplicação ficará disponível localmente, geralmente em `http://localhost:3000`.
 
-Se você estiver utilizando o Prisma Studio e receber um erro relacionado à conexão ou ao localhost, especialmente um erro dizendo que a conexão com o banco de dados falhou, você pode tentar rodar o Prisma Studio na porta específica. Para isso, use o comando abaixo:
+---
+
+###  Acessar o Prisma Studio
+
+Caso queira visualizar ou editar o banco de dados com Prisma Studio:
+
+```bash
+yarn prisma studio
+```
+
+Se ocorrer erro de conexão (ex: `ECONNREFUSED`, `localhost connection failed`, etc), tente especificar a porta:
 
 ```bash
 yarn prisma studio --port 5556
 ```
-### Arquivo ENV
-O ENV do projeto possui esse modelo:
+
+---
+
+### Configuração do Arquivo `.env`
+
+Crie um arquivo `.env` na raiz do projeto com o seguinte modelo:
+
+```env
+# URL de conexão com o banco de dados
+DATABASE_URL="mongodb+srv://usuario:senha@servidor/banco"
+
+# Chave secreta para autenticação JWT
+JWT_SECRET="sua-chave-secreta"
 ```
-DATABASE_URL="mongodb+srv:///..."
-JWT_SECRET="Código JWT"
-```
+
+> Nunca suba seu `.env` para o repositório público. Adicione-o ao `.gitignore`.
+
+---
+## 👥 Desenvolvido por
+
+- [João Vítor Justino Ferri](https://github.com/jvjfe)
+- [João David Petrovich](https://github.com/JoaoPetrovich)
