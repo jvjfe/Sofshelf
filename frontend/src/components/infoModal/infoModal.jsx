@@ -5,6 +5,7 @@ import { COLORS, FONT_SIZE } from "../../constants/tema"
 import styles from "../../screens/consultaItem/estantes.style"
 import ConfirmModal from "../confirmModal/confirmModal"
 import RackServices from "../../services/servicesBackend/RackServices"
+import ShelfServices from "../../services/servicesBackend/ShelfServices" // <-- Adicione o import
 
 function InfoModal({ visible, data, onClose, itens, onEdit, onDelete }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -13,7 +14,11 @@ function InfoModal({ visible, data, onClose, itens, onEdit, onDelete }) {
 
   const handleDelete = async (id) => {
     try {
-      await RackServices.deleteRack(id, false)
+      if (itens === "shelves") {
+        await RackServices.deleteRack(id, false)
+      } else if (itens === "shelf") {
+        await ShelfServices.deleteShelf(id, false)
+      }
       onDelete()
       onClose()
     } catch (error) {
@@ -68,8 +73,14 @@ function InfoModal({ visible, data, onClose, itens, onEdit, onDelete }) {
           </View>
         ) : (
           <View style={styles.textWrapper}>
-            <Text style={styles.labelText}>Prateleiras: </Text>
-            <Text style={styles.textM}>{data._count?.shelves || 0}</Text>
+            <Text style={styles.labelText}>
+              {itens === "shelves" ? "Prateleiras: " : "Produtos: "}
+            </Text>
+            <Text style={styles.textM}>
+              {itens === "shelves"
+                ? data._count?.shelves || 0
+                : data._count?.products || 0}
+            </Text>
           </View>
         )}
 
@@ -91,7 +102,7 @@ function InfoModal({ visible, data, onClose, itens, onEdit, onDelete }) {
         <ConfirmModal
           visible={showDeleteModal}
           onClose={() => setShowDeleteModal(false)}
-          onConfirm={handleDelete}
+          onConfirm={() => handleDelete(data.id)}
           data={data}
           title={deleteTitle}
           message={deleteMessage}

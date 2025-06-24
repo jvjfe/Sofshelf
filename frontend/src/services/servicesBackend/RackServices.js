@@ -32,12 +32,11 @@ class RackServices {
         }
     }
 
-    static async deleteRack(id, status = true) {
+    static async deleteRack(id, status) {
         try {
             const token = await getToken()
 
-            const response = await API.delete(`/rack/${id}`, {
-                data: { status },
+            const response = await API.delete(`/rack/${id}/status`, { status }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -64,7 +63,7 @@ class RackServices {
             throw error
         }
     }
-    
+
     static async getRacksByCompanyId(status) {
         try {
             const token = await getToken()

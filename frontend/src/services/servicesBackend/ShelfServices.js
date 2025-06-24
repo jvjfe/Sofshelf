@@ -32,10 +32,10 @@ class ShelfServices {
         }
     }
 
-    static async deleteShelf(id, status = false) {
+    static async deleteShelf(id, status) {
         try {
             const token = await getToken()
-            const response = await API.delete(`/shelves/${id}?status=${status}`, {
+            const response = await API.delete(`/shelves/${id}/status`, { status }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
