@@ -24,6 +24,7 @@
   },
   "scripts": {
     "dev": "nodemon ./src/server.js",
-    "db": "yarn prisma studio --port 5556"
+    "db": "yarn prisma studio --port 5556",
+    "git": "git add . && git commit -m \"update\" && git push"
   }
 }

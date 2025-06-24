@@ -51,7 +51,7 @@ routes.get("/rack/company/:companyId", rack.index)
 routes.get("/rack/:id", rack.show)
 routes.post("/rack", rack.create)
 routes.put("/rack/:id", rack.update)
-routes.delete("/rack/:id", rack.destroy)
+routes.put("/rack/:id/status", rack.destroy)
 
 routes.get("/embalagem/company/:companyId", embalagem.index)
 routes.get("/embalagem/:sigla", embalagem.show)
