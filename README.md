@@ -1,5 +1,7 @@
 # SOFSHELF
 
+![UML do Projeto](./assets/Uml.jpg)
+
 Sistema de gestão de estoque com controle de movimentações, desenvolvido com Node.js, Prisma e Yarn.
 
 ---
