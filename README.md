@@ -107,3 +107,4 @@ JWT_SECRET="sua-chave-secreta"
 
 - [João Vítor Justino Ferri](https://github.com/jvjfe)
 - [João David Petrovich](https://github.com/JDPetrovich)
+- [Luana Manuelle Castanheda](https://github.com/CastLuana63)
