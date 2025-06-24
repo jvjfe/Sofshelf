@@ -27,7 +27,7 @@ class RackController {
     async destroy(req, res) {
         try {
             const { id } = req.params;
-            const { status = false } = req.body;
+            const { status } = req.body;
 
             const updated = await RackService.deleteRack(id, status);
 
@@ -46,7 +46,7 @@ class RackController {
     async index(req, res) {
         try {
             const { companyId } = req.params;
-            const {status} = req.query;
+            const { status } = req.query;
 
             const statusFilter = status === "true"
 
@@ -56,7 +56,7 @@ class RackController {
             return res.status(500).json({ message: error.message })
         }
     }
-    
+
     async show(req, res) {
         try {
             const { id } = req.params;

@@ -25,7 +25,13 @@ class ShelfController {
             const { id } = req.params
             const { status } = req.body
             const shelf = await ShelfService.deleteShelf(id, status)
-            return res.status(200).json({ message: "Prateleira desativada com sucesso", shelf })
+
+            return res.status(200).json({
+                message: status
+                    ? "Prateleira reativada com sucesso"
+                    : "Prateleira desativada com sucesso",
+                data: shelf
+            });
         } catch (error) {
             return res.status(400).json({ error: error.message })
         }
@@ -47,7 +53,7 @@ class ShelfController {
             const { status } = req.query;
 
             const statusFilter = status === "true"
-            
+
             const shelves = await ShelfService.getAllShelvesByCompany(companyId, statusFilter)
             return res.status(200).json(shelves)
         } catch (error) {

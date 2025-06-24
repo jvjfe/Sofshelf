@@ -45,7 +45,7 @@ routes.get("/shelves/company/:companyId", shelf.indexCompany)
 routes.get("/shelves/:id", shelf.show)
 routes.post("/shelves", shelf.create)
 routes.put("/shelves/:id", shelf.update)
-routes.delete("/shelves/:id", shelf.destroy)
+routes.put("/shelves/:id/status", shelf.destroy)
 
 routes.get("/rack/company/:companyId", rack.index)
 routes.get("/rack/:id", rack.show)
